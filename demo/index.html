@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SophosSimpleModal</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module">
+      import '../sophos-simple-modal';
+    </script>
+  </head>
+  <body>
+    <div>
+      <h2>Modal full screen</h2>
+      <button
+      onclick="showFullScreenModal()">Show modal</button>
+      <sophos-simple-modal
+      id="full-screen-modal"
+      modalStyle="full-screen">
+    </sophos-simple-modal>
+    </div>
+
+    <div>
+      <h2>Modal inside a div</h2>
+      <button onclick="showLimitedModal()">Show modal</button>
+      <div id="limited-div">
+        <sophos-simple-modal
+        id="limited-modal"
+        modalStyle="limited-screen"></sophos-simple-modal>
+      </div>
+    </div>
+
+    <div>
+      <h2>Slotted content for modal</h2>
+      <button>Show modal</button>
+      <sophos-simple-modal></sophos-simple-modal>
+    </div>
+    <div></div>
+    <sophos-simple-modal></sophos-simple-modal>
+    <script src="script.js"></script>
+  </body>
+</html>
