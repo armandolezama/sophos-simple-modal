@@ -9,10 +9,17 @@ class SophosSimpleModal extends LitElement {
     */
   constructor() {
     super();
+    this.class = '';
+    this.modalTitle = 'Modal component title';
+    this.modalMessage = 'Hello from modal';
+    this.modalFooterMessage = 'Hello from footer';
+    this.modalStyle = '';
+    this.showOnlySlottedContent = false;
+    this.showOnlySlottedHeader = false;
+    this.showOnlySlottedBody = false;
+    this.showOnlySlottedFooter = false;
     this._hiddenClass = 'hidden-modal';
     this._showedClass = 'showed-modal';
-    this.class = this._hiddenClass;
-    this.modalStyle = '';
   };
 
   /**
@@ -21,13 +28,21 @@ class SophosSimpleModal extends LitElement {
   static get properties() {
     return {
       class : { type: String },
-      modalStyle : { type : String }
+      modalStyle : { type : String },
+      showOnlySlottedContent : { type : Boolean},
+      showOnlySlottedHeader : { type : Boolean},
+      showOnlySlottedBody : { type : Boolean},
+      showOnlySlottedFooter : { type : Boolean}
     };
   };
 
   static get styles() {
     return styles;
   };
+
+  firstUpdated() {
+    this.class = this._hiddenClass;
+  }
 
   openModal(){
     this.class = this._showedClass;
@@ -37,23 +52,63 @@ class SophosSimpleModal extends LitElement {
     this.class = this._hiddenClass;
   };
 
+  createModalHeader(){
+    const name = 'modal-header';
+    
+    return this.showOnlySlottedHeader ? html`
+      ${this.createSlot(name)}
+    ` : html`
+      <h2>${this.modalTitle}</h2>
+      ${this.createSlot(name)}
+    `;
+  };
+
+  createModalBody(){
+    const name = 'modal-body'
+    return this.showOnlySlottedBody ? html`
+      ${this.createSlot(name)}
+    ` : html`
+      <p>${this.modalMessage}</p>
+      ${this.createSlot(name)}
+    `;
+  };
+
+  createModalFooter(){
+    const name = 'modal-footer'
+    return this.showOnlySlottedFooter ? html`
+      ${this.createSlot(name)}
+    ` : html`
+      <h3>${this.modalFooterMessage}</h3>
+      ${this.createSlot(name)}
+    `;
+  };
+
+  createSlot(name){
+    return html`
+      <slot name="${name}"></slot>
+    `;
+  };
+
   render() {
     return html`
       <div id="modal-main-container" class="${this.class} ${this.modalStyle}">
-        <div id="modal-container">          
-          <div class="modal-content">
-            <div class="modal-header">
-              <span @click="${this.closeModal}" class="close">&times;</span>
-              <h2>Modal Header</h2>
+        <div id="modal-container">
+          ${this.showOnlySlottedContent ? html`
+            ${this.createSlot('modal-content')}
+          ` : html`
+          <div id="modal-content">
+            <div id="modal-header">
+              <span @click="${this.closeModal}" id="close-button">&times;</span>
+              ${this.createModalHeader()}
             </div>
-            <div class="modal-body">
-              <p>Some text in the Modal Body</p>
-              <p>Some other text...</p>
+            <div id="modal-body">
+              ${this.createModalBody()}
             </div>
-            <div class="modal-footer">
-              <h3>Modal Footer</h3>
+            <div id="modal-footer">
+              ${this.createModalFooter()}
             </div>
           </div>
+          `}          
         </div>
       </div>`
   }
