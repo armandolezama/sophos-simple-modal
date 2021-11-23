@@ -14,10 +14,10 @@ class SophosSimpleModal extends LitElement {
     this.modalMessage = 'Hello from modal';
     this.modalFooterMessage = 'Hello from footer';
     this.modalStyle = '';
-    this.showOnlySlottedContent = false;
-    this.showOnlySlottedHeader = false;
-    this.showOnlySlottedBody = false;
-    this.showOnlySlottedFooter = false;
+    this.isOnlySlottedContentShown = false;
+    this.isOnlySlottedHeaderShown = false;
+    this.isOnlySlottedBodyShown = false;
+    this.isOnlySlottedFooterShown = false;
     this.isCloseButtonDisplayed = false;
     this._hiddenClass = 'hidden-modal';
     this._showedClass = 'showed-modal';
@@ -31,10 +31,10 @@ class SophosSimpleModal extends LitElement {
     return {
       class : { type: String },
       modalStyle : { type : String },
-      showOnlySlottedContent : { type : Boolean},
-      showOnlySlottedHeader : { type : Boolean},
-      showOnlySlottedBody : {  type : Boolean},
-      showOnlySlottedFooter : { type : Boolean},
+      isOnlySlottedContentShown : { type : Boolean},
+      isOnlySlottedHeaderShown : { type : Boolean},
+      isOnlySlottedBodyShown : {  type : Boolean},
+      isOnlySlottedFooterShown : { type : Boolean},
       isModalOpened : { type : Boolean },
       isCloseButtonDisplayed : { type : Boolean}
     };
@@ -73,7 +73,7 @@ class SophosSimpleModal extends LitElement {
   createModalHeader(){
     const name = 'modal-header';
     
-    return this.showOnlySlottedHeader ? html`
+    return this.isOnlySlottedHeaderShown ? html`
       ${this.createSlot(name)}
     ` : html`
       <h2>${this.modalTitle}</h2>
@@ -83,7 +83,7 @@ class SophosSimpleModal extends LitElement {
 
   createModalBody(){
     const name = 'modal-body'
-    return this.showOnlySlottedBody ? html`
+    return this.isOnlySlottedBodyShown ? html`
       ${this.createSlot(name)}
     ` : html`
       <p>${this.modalMessage}</p>
@@ -93,7 +93,7 @@ class SophosSimpleModal extends LitElement {
 
   createModalFooter(){
     const name = 'modal-footer'
-    return this.showOnlySlottedFooter ? html`
+    return this.isOnlySlottedFooterShown ? html`
       ${this.createSlot(name)}
     ` : html`
       <h3>${this.modalFooterMessage}</h3>
@@ -119,7 +119,7 @@ class SophosSimpleModal extends LitElement {
     return html`
       <div id="modal-main-container" class="${this.class} ${this.modalStyle}">
         <div id="modal-container">
-          ${this.showOnlySlottedContent ? html`
+          ${this.isOnlySlottedContentShown ? html`
             ${this.createSlot('modal-content')}
           ` : html`
           <div id="modal-content">
