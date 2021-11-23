@@ -20,6 +20,7 @@ class SophosSimpleModal extends LitElement {
     this.showOnlySlottedFooter = false;
     this._hiddenClass = 'hidden-modal';
     this._showedClass = 'showed-modal';
+    this.isModalOpened = false;
   };
 
   /**
@@ -31,8 +32,9 @@ class SophosSimpleModal extends LitElement {
       modalStyle : { type : String },
       showOnlySlottedContent : { type : Boolean},
       showOnlySlottedHeader : { type : Boolean},
-      showOnlySlottedBody : { type : Boolean},
-      showOnlySlottedFooter : { type : Boolean}
+      showOnlySlottedBody : {  type : Boolean},
+      showOnlySlottedFooter : { type : Boolean},
+      isModalOpened : { type : Boolean }
     };
   };
 
@@ -40,9 +42,23 @@ class SophosSimpleModal extends LitElement {
     return styles;
   };
 
+  set isModalOpened(value) {
+    const newValue = value;
+    const oldValue = this._isModalOpened;
+    this._isModalOpened = newValue;
+    if(newValue){
+      this.openModal();
+    } else {
+      this.closeModal();
+    };
+
+    this.requestUpdate('isModalOpened', oldValue);
+  };
+
   firstUpdated() {
+    super.firstUpdated();
     this.class = this._hiddenClass;
-  }
+  };
 
   openModal(){
     this.class = this._showedClass;
