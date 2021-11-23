@@ -18,6 +18,7 @@ class SophosSimpleModal extends LitElement {
     this.showOnlySlottedHeader = false;
     this.showOnlySlottedBody = false;
     this.showOnlySlottedFooter = false;
+    this.isCloseButtonDisplayed = false;
     this._hiddenClass = 'hidden-modal';
     this._showedClass = 'showed-modal';
     this.isModalOpened = false;
@@ -34,7 +35,8 @@ class SophosSimpleModal extends LitElement {
       showOnlySlottedHeader : { type : Boolean},
       showOnlySlottedBody : {  type : Boolean},
       showOnlySlottedFooter : { type : Boolean},
-      isModalOpened : { type : Boolean }
+      isModalOpened : { type : Boolean },
+      isCloseButtonDisplayed : { type : Boolean}
     };
   };
 
@@ -105,6 +107,14 @@ class SophosSimpleModal extends LitElement {
     `;
   };
 
+  showCloseButton(){
+    if(this.isCloseButtonDisplayed){
+      return html`
+        <span @click="${this.closeModal}" id="close-button">&times;</span>
+      `;
+    };
+  }
+
   render() {
     return html`
       <div id="modal-main-container" class="${this.class} ${this.modalStyle}">
@@ -114,7 +124,7 @@ class SophosSimpleModal extends LitElement {
           ` : html`
           <div id="modal-content">
             <div id="modal-header">
-              <span @click="${this.closeModal}" id="close-button">&times;</span>
+              ${this.showCloseButton()}
               ${this.createModalHeader()}
             </div>
             <div id="modal-body">

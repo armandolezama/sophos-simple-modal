@@ -1,4 +1,5 @@
 const fullScreenModal = document.querySelector('#full-screen-modal');
+fullScreenModal.isCloseButtonDisplayed = true;
 const showFullScreenModal = () => {
   fullScreenModal.isModalOpened = true;
 };
