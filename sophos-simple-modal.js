@@ -10,9 +10,9 @@ class SophosSimpleModal extends LitElement {
   constructor() {
     super();
     this.class = '';
-    this.modalTitle = 'Modal component title';
-    this.modalMessage = 'Hello from modal';
-    this.modalFooterMessage = 'Hello from footer';
+    this.modalTitle = '';
+    this.modalMessage = '';
+    this.modalFooterMessage = '';
     this.modalStyle = '';
     this.isOnlySlottedContentShown = false;
     this.isOnlySlottedHeaderShown = false;
