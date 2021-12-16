@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html } from 'lit';
 import styles from './sophos-simple-modal-styles';
 
 class SophosSimpleModal extends LitElement {
@@ -7,7 +7,7 @@ class SophosSimpleModal extends LitElement {
     * state, set up event listeners, create shadow dom.
     * @constructor
     */
-  constructor() {
+  constructor () {
     super();
     this.class = '';
     this.modalTitle = '';
@@ -22,29 +22,29 @@ class SophosSimpleModal extends LitElement {
     this._hiddenClass = 'hidden-modal';
     this._showedClass = 'showed-modal';
     this.isModalOpened = false;
-  };
+  }
 
   /**
     * Declared properties and their corresponding attributes
     */
-  static get properties() {
+  static get properties () {
     return {
       class : { type: String },
       modalStyle : { type : String },
       isOnlySlottedContentShown : { type : Boolean},
       isOnlySlottedHeaderShown : { type : Boolean},
-      isOnlySlottedBodyShown : {  type : Boolean},
+      isOnlySlottedBodyShown : { type : Boolean},
       isOnlySlottedFooterShown : { type : Boolean},
       isModalOpened : { type : Boolean },
       isCloseButtonDisplayed : { type : Boolean}
     };
-  };
+  }
 
-  static get styles() {
+  static get styles () {
     return styles;
-  };
+  }
 
-  set isModalOpened(value) {
+  set isModalOpened (value) {
     const newValue = value;
     const oldValue = this._isModalOpened;
     this._isModalOpened = newValue;
@@ -52,25 +52,25 @@ class SophosSimpleModal extends LitElement {
       this.openModal();
     } else {
       this.closeModal();
-    };
+    }
 
     this.requestUpdate('isModalOpened', oldValue);
-  };
+  }
 
-  firstUpdated() {
+  firstUpdated () {
     super.firstUpdated();
     this.class = this._hiddenClass;
-  };
+  }
 
-  openModal(){
+  openModal (){
     this.class = this._showedClass;
-  };
+  }
 
-  closeModal(){
+  closeModal (){
     this.class = this._hiddenClass;
-  };
+  }
 
-  createModalHeader(){
+  createModalHeader (){
     const name = 'modal-header';
     
     return this.isOnlySlottedHeaderShown ? html`
@@ -79,9 +79,9 @@ class SophosSimpleModal extends LitElement {
       <h2>${this.modalTitle}</h2>
       ${this.createSlot(name)}
     `;
-  };
+  }
 
-  createModalBody(){
+  createModalBody (){
     const name = 'modal-body'
     return this.isOnlySlottedBodyShown ? html`
       ${this.createSlot(name)}
@@ -89,9 +89,9 @@ class SophosSimpleModal extends LitElement {
       <p>${this.modalMessage}</p>
       ${this.createSlot(name)}
     `;
-  };
+  }
 
-  createModalFooter(){
+  createModalFooter (){
     const name = 'modal-footer'
     return this.isOnlySlottedFooterShown ? html`
       ${this.createSlot(name)}
@@ -99,23 +99,23 @@ class SophosSimpleModal extends LitElement {
       <h3>${this.modalFooterMessage}</h3>
       ${this.createSlot(name)}
     `;
-  };
-
-  createSlot(name){
-    return html`
-      <slot name="${name}"></slot>
-    `;
-  };
-
-  showCloseButton(){
-    if(this.isCloseButtonDisplayed){
-      return html`
-        <span @click="${this.closeModal}" id="close-button">&times;</span>
-      `;
-    };
   }
 
-  render() {
+  createSlot (name){
+    return html`
+      <slot name=${name}></slot>
+    `;
+  }
+
+  showCloseButton (){
+    if(this.isCloseButtonDisplayed){
+      return html`
+        <span @click=${this.closeModal} id="close-button">&times;</span>
+      `;
+    }
+  }
+
+  render () {
     return html`
       <div id="modal-main-container" class="${this.class} ${this.modalStyle}">
         <div id="modal-container">
